@@ -7,12 +7,49 @@ public class MainNew1 {
         //This is new
         System.out.println("\n");
         System.out.println("\n");
-        number = 1000;
-        create_ProductList();
-        create_StockListConfiguration();
-        create_ProductListEntry();
-        create_StockListEntryConfiguration();
-        create_StockListEntryPriceInformation();
+        number = 5;
+
+          create_Products();
+          create_ProductNames();
+          create_ProductList();
+          create_StockListConfiguration();
+          create_ProductListEntry();
+          create_StockListEntryConfiguration();
+          create_StockListEntryPriceInformation();
+    }
+
+    static void create_Products(){
+        //print macro
+        System.out.println("# Macros / Replacement Parameter definitions\n" +
+                "$productCatalog = lemuProductCatalog\n" +
+                "$productCatalogName = Lemu Product Catalog\n" +
+                "$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Online'])[unique=true, default=$productCatalog:Online]\n" +
+                "$supercategories = supercategories(code, $catalogVersion)\n" +
+                "$baseProduct = baseProduct(code, $catalogVersion)\n" +
+                "$approved = approvalstatus(code)[default='approved']\n");
+        System.out.println(
+                "INSERT_UPDATE Product; code[unique = true]; $catalogVersion; $approved; $supercategories; manufacturerName; manufacturerAID; sapEAN; variantType(code); baseUnit(code)[default = PCE]; deliveryTime; minOrderQuantity; numberContentUnits; sapPlant(code); packagingProduct[default = false]; packagingMaterialType\n");
+
+        for (int i = 1; i <= number; i++) {
+            System.out.println( "; exporttest" + i +" ;;;" + " LM_26306 ;;;" + "exporttest" + i + "Ean ;;;; 0;3 ;" );
+        }
+        System.out.println("\n");
+    }
+
+    static void create_ProductNames(){
+        //print macro
+        System.out.println("# Macros / Replacement Parameter definitions\n" +
+                "$productCatalog = lemuProductCatalog\n" +
+                "$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Online'])[unique=true, default=$productCatalog:Online]\n" +
+                "\n" +
+                "# Language\n" +
+                "$lang = da\n");
+        System.out.println("UPDATE Product; code[unique = true]; name[lang = $lang] ; $catalogVersion; supplierLink[lang = $lang]; description[lang = $lang]\n");
+
+        for (int i = 1; i <= number; i++) {
+            System.out.println( "; exporttest" + i +" ; exporttest danish name" + i + " ;;;" + "exporttest danish description" + i);
+        }
+        System.out.println("\n");
     }
 
     static void create_ProductList(){
