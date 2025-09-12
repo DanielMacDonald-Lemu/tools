@@ -1,21 +1,36 @@
+import java.io.Console;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class MainNew1 {
     static  int number;
-
-    public static void main(String[] args) {
+    static  String stocklist;
+    public static void main(String[] args) throws IOException {
 
         //This is new
         System.out.println("\n");
         System.out.println("\n");
         number = 5;
+        stocklist = "stocklist";
 
-          create_Products();
-          create_ProductNames();
-          create_ProductList();
-          create_StockListConfiguration();
-          create_ProductListEntry();
-          create_StockListEntryConfiguration();
-          create_StockListEntryPriceInformation();
+        getConfiguration();
+        create_Products();
+        create_ProductNames();
+        create_ProductList();
+        create_StockListConfiguration();
+        create_ProductListEntry();
+        create_StockListEntryConfiguration();
+        create_StockListEntryPriceInformation();
+    }
+
+
+    static void getConfiguration() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("name stocklist?");
+         stocklist = scanner.nextLine();
+        System.out.println("number of products?");
+         number = scanner.nextInt();
     }
 
     static void create_Products(){
@@ -55,13 +70,13 @@ public class MainNew1 {
     static void create_ProductList(){
         System.out.println(
                 "INSERT_UPDATE ProductList; code[unique = true] ; user(uid)[unique = true]; name; lmUserGroup(uid); sharedPermission(code)[default = READ_SHARED]; sharedWithUsers(uid); listType(code); stockListConfiguration(&stockListConfigId)\n" +
-                        "; stocklist ; 10fd56807a8b4f14ba29ba52566686a1 ; Bob's stock list ;;;; STOCK_LIST ; slc-1");
+                        "; "+ stocklist+" ; 10fd56807a8b4f14ba29ba52566686a1 ; Bob's stock list ;;;; STOCK_LIST ; slc-1");
         System.out.println("\n");
     }
     static void create_StockListConfiguration(){
         System.out.println(
                 "INSERT_UPDATE StockListConfiguration; b2bUnit(uid)[unique = true]; address ; comment; active; totalAmount; lastUpdate[dateformat = dd.MM.yyyy HH:mm:ss]; productList(code)[unique = true]; &stockListConfigId \n" +
-                        " ; 0000200001 ; address Test ; comment test ; true ; 1995.2 ; 03.06.2010 10:00:00 ; stocklist ; slc-1");
+                        " ; 0000200001 ; address Test ; comment test ; true ; 1995.2 ; 03.06.2010 10:00:00 ; "+ stocklist +"; slc-1");
         System.out.println("\n");
     }
 
@@ -69,7 +84,7 @@ public class MainNew1 {
         System.out.println(
                 "INSERT_UPDATE ProductListEntry; list(code)[unique = true] ;product(code)[unique = true] ;quantity; customSortIndex; &listEntry; stockListEntryConfiguration(&stockListEntryConfigId); stockListEntryPriceInformation(&priceInfoId)");
         for (int i = 1; i <= number; i++) {
-            System.out.println( ";stocklist ;exporttest" + i +";3 ;2; ple-" + i +";slec-" + i + "; price-" + i);
+            System.out.println( "; "+ stocklist + " ;exporttest" + i +";3 ;2; ple-" + i +";slec-" + i + "; price-" + i);
         }
         System.out.println("\n");
     }
